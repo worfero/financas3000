@@ -9,26 +9,11 @@
             aria-label="Salario">
         </div>
     </div>
+    <div class="col-sm-1">
+        <div class="mb-3">
+            <label class="form-label" for="fixed-bill1">Length:</label>
+            <input id="fixed-bill1" name="fixed-bill1" type="number" class="form-control" value=<%=finance.fixedBills.length %>
+            aria-label="Bill">
+        </div>
+    </div>
 </div>
-
-<script>
-    document.getElementById("income").addEventListener("input", async (event) => {
-        const newIncome = event.target.value;
-        try{
-            const res = await fetch('/update', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ key: 'income', value: newIncome })
-            });
-
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-            const data = await res.json();
-            console.log('Server response:', data);
-        } catch (err) {
-            console.error('Fetch failed:', err);
-        }
-    });
-</script>

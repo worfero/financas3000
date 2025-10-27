@@ -23,7 +23,6 @@ async function writeFinance(financeObj) {
 
 module.exports.index = async (req, res) => {
     const finance = await readFinance();
-    console.log(finance.income);
     res.render('finances/index', { finance });
 };
 
