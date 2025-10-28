@@ -11,6 +11,11 @@
                     value=<%= income.value %> aria-label="<%= income.name %>">
             </div>
         <% }); %>
+        <div class="mb-3">
+            <label class="form-label" for="income-total">Total:</label>
+                <input id="income-total" name="income-total" type="number" readonly class="form-control no-arrows"
+                    value=<%= finance.totalIncome %> aria-label="income-total">
+        </div>
     </div>
     <div class="col-sm-2">
         <h4 class="text-center">Contas Fixas</h4>

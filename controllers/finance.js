@@ -23,6 +23,10 @@ async function writeFinance(finance) {
 
 module.exports.index = async (req, res) => {
     const finance = await readFinance();
+    finance.totalIncome = 0;
+    finance.incomes.forEach(function(income, index){
+        finance.totalIncome += income.value;
+    });
     res.render('finances/index', { finance });
 };
 

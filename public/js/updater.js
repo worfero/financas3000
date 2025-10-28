@@ -1,9 +1,16 @@
 (function () {
+    // function to add an event listener to every income field and update the array
     finance.incomes.forEach(function(income, index) {
         id = "income-" + index;
         document.getElementById(id).addEventListener("input", async (event) => {
+            // gets new value from the input field
             const newValue = parseInt(event.target.value);
-            income.value = newValue;
+            // updates total income
+            finance.totalIncome = finance.totalIncome - income.value + newValue;
+            // updates respective income field
+            income.value = parseInt(event.target.value);
+            // updates total income field in the client
+            document.getElementById("income-total").value = finance.totalIncome;
             try{
                 const res = await fetch('/update', {
                     method: 'PUT',
@@ -22,6 +29,7 @@
             }
         });
     });
+    // function to add an event listener to every fixed bill field and update the array
     finance.fixedBills.forEach(function(fixedBill, index) {
         id = "fixed-bill-" + index;
         document.getElementById(id).addEventListener("input", async (event) => {
