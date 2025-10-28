@@ -6,6 +6,6 @@ router.route('/')
     .get(finance.index)
 
 router.route('/update')
-    .post(finance.update);
+    .put(finance.update);
 
 module.exports = router;

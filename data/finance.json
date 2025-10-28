@@ -1,10 +1,15 @@
 {
   "user": "user",
-  "income": "312",
+  "incomes": [
+    {
+      "name": "Salário",
+      "value": "10"
+    }
+  ],
   "fixedBills": [
     {
       "name": "Aluguel",
-      "value": 1200
+      "value": "1202"
     }
   ]
 }

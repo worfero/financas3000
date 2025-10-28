@@ -4,11 +4,13 @@
     <h1 class="text-center">Finanças</h1>
     <div class="col-sm-2">
         <h4 class="text-center">Ganhos</h4>
-        <div class="mb-3">
-            <label class="form-label" for="income">Salário:</label>
-            <input id="income" name="income" type="number" class="form-control" value=<%=finance.income %>
-            aria-label="Salario">
-        </div>
+        <% finance.incomes.forEach(function(income, index) { %>
+            <div class="mb-3">
+                <label class="form-label" for="income-<%= index %>"><%= income.name %>:</label>
+                <input id="income-<%= index %>" name="income-<%= index %>" type="number" class="form-control"
+                    value=<%= income.value %> aria-label="<%= income.name %>">
+            </div>
+        <% }); %>
     </div>
     <div class="col-sm-2">
         <h4 class="text-center">Contas Fixas</h4>

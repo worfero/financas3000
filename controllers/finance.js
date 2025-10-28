@@ -12,9 +12,9 @@ async function readFinance() {
     }
 }
 
-async function writeFinance(financeObj) {
+async function writeFinance(finance) {
     try {
-        await fs.writeFileSync(userDataPath, JSON.stringify(financeObj, null, 2), 'utf-8');
+        await fs.writeFileSync(userDataPath, JSON.stringify(finance, null, 2), 'utf-8');
         console.log('Finance data saved successfully.');
     } catch (err) {
         console.error('Error writing JSON file:', err);
@@ -27,15 +27,8 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-    const { key, value } = req.body;
+    const finance = req.body;
 
-    const finance = await readFinance();
-
-    if (finance.hasOwnProperty(key)) {
-        finance[key] = value;
-        await writeFinance(finance);
-        res.json({ success: true, updated: finance });
-    } else {
-        res.status(400).json({ success: false, message: "Invalid key" });
-    }
+    await writeFinance(finance);
+    res.json({ success: true, updated: finance });
 };
