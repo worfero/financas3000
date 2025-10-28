@@ -24,9 +24,19 @@ async function writeFinance(finance) {
 module.exports.index = async (req, res) => {
     const finance = await readFinance();
     finance.totalIncome = 0;
+    finance.totalFixedBills = 0;
+    finance.balance = 0;
+
     finance.incomes.forEach(function(income, index){
         finance.totalIncome += income.value;
     });
+
+    finance.fixedBills.forEach(function(bill, index){
+        finance.totalFixedBills += bill.value;
+    });
+
+    finance.balance = finance.totalIncome - finance.totalFixedBills;
+
     res.render('finances/index', { finance });
 };
 

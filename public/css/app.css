@@ -9,3 +9,11 @@
 .no-arrows[type=number] {
   -moz-appearance: textfield;
 }
+
+.balance-red {
+  background-color: red !important;
+}
+
+.balance-green {
+  background-color: green !important;
+}

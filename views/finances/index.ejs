@@ -26,5 +26,18 @@
                     value=<%=bill.value %> aria-label="fixed-bill-<%= index %>">
             </div>
         <% }); %>
+        <div class="mb-3">
+            <label class="form-label" for="fixed-bills-total">Total:</label>
+                <input id="fixed-bills-total" name="fixed-bills-total" type="number" readonly class="form-control no-arrows"
+                    value=<%= finance.totalFixedBills %> aria-label="fixed-bills-total">
+        </div>
+    </div>
+    <div class="col-sm-2">
+        <h4 class="text-center">Balanço</h4>
+        <div class="mb-3">
+            <label class="form-label" for="balance">Total:</label>
+                <input id="balance" name="balance" type="number" readonly class="form-control no-arrows"
+                    value=<%= finance.balance %> aria-label="balance">
+        </div>
     </div>
 </div>
