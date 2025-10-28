@@ -2,7 +2,7 @@
     finance.incomes.forEach(function(income, index) {
         id = "income-" + index;
         document.getElementById(id).addEventListener("input", async (event) => {
-            const newValue = event.target.value;
+            const newValue = parseInt(event.target.value);
             income.value = newValue;
             try{
                 const res = await fetch('/update', {
@@ -25,7 +25,7 @@
     finance.fixedBills.forEach(function(fixedBill, index) {
         id = "fixed-bill-" + index;
         document.getElementById(id).addEventListener("input", async (event) => {
-            const newValue = event.target.value;
+            const newValue = parseInt(event.target.value);
             fixedBill.value = newValue;
             try{
                 const res = await fetch('/update', {
