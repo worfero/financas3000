@@ -3,24 +3,24 @@
   "incomes": [
     {
       "name": "Salário",
-      "value": 1211
+      "value": 3000
     },
     {
       "name": "Bônus",
-      "value": 115
+      "value": 0
     },
     {
-      "name": "Novo",
+      "name": "Teste",
       "value": 0
     }
   ],
-  "totalIncome": 1326,
+  "totalIncome": 3010,
   "fixedBills": [
     {
       "name": "Aluguel",
-      "value": 1165
+      "value": 1500
     }
   ],
-  "totalFixedBills": 1165,
-  "balance": 161
+  "totalFixedBills": 1500,
+  "balance": 1510
 }

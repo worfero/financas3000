@@ -7,7 +7,7 @@
         const labelText = incomeLabel.value.trim() || "Ganho"; // default if empty
 
         const container = document.createElement("div");
-        container.className = "input-group mb-3 input-group-sm";
+        container.className = "input-group mb-3 input-group-sm mx-auto";
 
         const span = document.createElement("span");
         span.className = "input-group-text";
