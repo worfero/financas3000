@@ -5,7 +5,7 @@ const router = express.Router();
 router.route('/')
     .get(finance.index)
 
-router.route('/update')
-    .put(finance.update);
+router.route('/new')
+    .put(finance.new);
 
 module.exports = router;
