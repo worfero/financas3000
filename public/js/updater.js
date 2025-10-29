@@ -19,12 +19,12 @@
             // update balance
             finance.balance = finance.totalIncome - finance.totalFixedBills;
 
-            if(finance.balance > 0){
-                document.getElementById("balance").classList.toggle("balance-green");
-            }
-            else if(finance.balance < 0){
-                document.getElementById("balance").classList.toggle("balance-red");
-            }
+            //if(finance.balance > 0){
+            //    document.getElementById("balance").classList.toggle("balance-green");
+            //}
+            //else if(finance.balance < 0){
+            //    document.getElementById("balance").classList.toggle("balance-red");
+            //}
 
             // updates total income field in the client
             document.getElementById("balance").value = finance.balance;
@@ -72,7 +72,7 @@
             // updates total income field in the client
             document.getElementById("balance").value = finance.balance;
             // updates total income field in the client
-            document.getElementById("fixed-bill-total").value = finance.totalFixedBills;
+            document.getElementById("fixed-bills-total").value = finance.totalFixedBills;
             try{
                 const res = await fetch('/update', {
                     method: 'PUT',

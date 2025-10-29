@@ -1,43 +1,62 @@
 <% layout('layouts/boilerplate') %>
 
+<h1 class="text-center">Finanças</h1>
 <div class="row gx-5">
-    <h1 class="text-center">Finanças</h1>
-    <div class="col-sm-2">
-        <h4 class="text-center">Ganhos</h4>
+    <div class="col-sm-3">
+        <h4 class="text-center mb-4">Ganhos</h4>
         <% finance.incomes.forEach(function(income, index) { %>
-            <div class="mb-3">
-                <label class="form-label" for="income-<%= index %>"><%= income.name %>:</label>
+            <div class="input-group mb-3 input-group-sm mx-auto">
+                <span class="input-group-text" id="income-<%= index %>-label"><%= income.name %>:</span>
                 <input id="income-<%= index %>" name="income-<%= index %>" type="number" class="form-control"
-                    value=<%= income.value %> aria-label="<%= income.name %>">
+                        value=<%= income.value %> aria-label="<%= income.name %>">
+                <button class="btn btn-outline-danger fw-bold" type="button" id="del-income-btn-<%= index %>">x</button>
             </div>
         <% }); %>
-        <div class="mb-3">
-            <label class="form-label" for="income-total">Total:</label>
-                <input id="income-total" name="income-total" type="number" readonly class="form-control no-arrows"
-                    value=<%= finance.totalIncome %> aria-label="income-total">
+        <div id="new-incomes">
+            <!-- New incomes will be put here -->
+        </div>
+        <div class="input-group input-group-sm mx-auto">
+            <input type="text" class="form-control" id="new-income-name" aria-describedby="add-income-btn" 
+                aria-label="new-income-name" placeholder="Adicionar...">
+            <button class="btn btn-outline-primary fw-bold" type="button" id="add-income-btn">+</button>
+        </div>
+        <hr class="border-secondary opacity-50">
+        <div class="input-group mb-3 input-group-sm mx-auto">
+            <span class="input-group-text" id="income-total-label">Total:</span>
+            <input id="income-total" name="income-total" type="number" class="form-control no-arrows bg-light"
+                    value=<%= finance.totalIncome %> aria-label="income-total" readonly>
         </div>
     </div>
-    <div class="col-sm-2">
-        <h4 class="text-center">Contas Fixas</h4>
+    <div class="col-sm-3">
+        <h4 class="text-center mb-4">Contas Fixas</h4>
         <% finance.fixedBills.forEach(function(bill, index) { %>
-            <div class="mb-3">
-                <label class="form-label" for="fixed-bill-<%= index %>"><%= bill.name %>:</label>
-                <input id="fixed-bill-<%= index %>" name="fixed-bill-<%= index %>" type="number" class="form-control" 
-                    value=<%=bill.value %> aria-label="fixed-bill-<%= index %>">
+            <div class="input-group mb-3 input-group-sm mx-auto">
+                <span class="input-group-text" id="fixed-bill-<%= index %>-label"><%= bill.name %>:</span>
+                <input id="fixed-bill-<%= index %>" name="fixed-bill-<%= index %>" type="number" class="form-control"
+                        value=<%= bill.value %> aria-label="<%= bill.name %>">
             </div>
         <% }); %>
-        <div class="mb-3">
-            <label class="form-label" for="fixed-bills-total">Total:</label>
-                <input id="fixed-bills-total" name="fixed-bills-total" type="number" readonly class="form-control no-arrows"
-                    value=<%= finance.totalFixedBills %> aria-label="fixed-bills-total">
+        <hr class="border-secondary opacity-50">
+        <div class="input-group mb-3 input-group-sm mx-auto">
+            <span class="input-group-text" id="fixed-bills-total-label">Total:</span>
+            <input id="fixed-bills-total" name="fixed-bills-total" type="number" class="form-control no-arrows bg-light"
+                    value=<%= finance.totalFixedBills %> aria-label="fixed-bills-total" readonly>
         </div>
     </div>
-    <div class="col-sm-2">
-        <h4 class="text-center">Balanço</h4>
-        <div class="mb-3">
-            <label class="form-label" for="balance">Total:</label>
-                <input id="balance" name="balance" type="number" readonly class="form-control no-arrows"
-                    value=<%= finance.balance %> aria-label="balance">
+    <div class="col-sm-3">
+        <h4 class="text-center mb-4">Balanço</h4>
+        <div class="input-group mb-3 input-group-sm mx-auto">
+            <span class="input-group-text" id="balance-label">Total:</span>
+            <input id="balance" name="balance" type="number" class="form-control no-arrows bg-light"
+                    value=<%= finance.balance %> aria-label="balance" readonly>
         </div>
     </div>
 </div>
+
+<script>
+    const finance = <%- JSON.stringify(finance) %>;
+</script>
+
+<script src="/js/updater.js"></script>
+<script src="/js/addFields.js"></script>
+<script src="/js/removeFields.js"></script>

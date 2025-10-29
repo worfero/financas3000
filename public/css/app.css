@@ -17,3 +17,12 @@
 .balance-green {
   background-color: green !important;
 }
+
+.input-group-sm {
+  width: 80%;
+}
+
+.input-group-text {
+  width: 80px;       /* same width for all spans */
+  justify-content: center; /* optional: center text horizontally */
+}
