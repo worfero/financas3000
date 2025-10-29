@@ -1,3 +1,22 @@
+async function updateJSON(jsonObj) {
+    try{
+        const res = await fetch('/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(jsonObj)
+        });
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        console.log('Server response:', data);
+    } catch (err) {
+        console.error('Fetch failed:', err);
+    }
+}
+
 (function () {
     //if(finance.balance > 0){
     //    document.getElementById("balance").classList.add("balance-green");
@@ -30,22 +49,7 @@
             document.getElementById("balance").value = finance.balance;
             // updates total income field in the client
             document.getElementById("income-total").value = finance.totalIncome;
-            try{
-                const res = await fetch('/update', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(finance)
-                });
-
-                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-                const data = await res.json();
-                console.log('Server response:', data);
-            } catch (err) {
-                console.error('Fetch failed:', err);
-            }
+            updateJSON(finance);
         });
     });
     // function to add an event listener to every fixed bill field and update the array

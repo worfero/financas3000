@@ -29,22 +29,7 @@
 
         finance.incomes.push(newIncome);
 
-        (async () => {
-            try{
-                const res = await fetch('/update', {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(finance)
-            });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const data = await res.json();
-            console.log('Server response:', data);
-            } catch (err) {
-                console.error('Fetch failed:', err);
-            }
-        })();
+        updateJSON(finance);
 
         //input.addEventListener("input", async (event) => {
         //    // gets new value from the input field
