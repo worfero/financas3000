@@ -34,8 +34,17 @@
                 <span class="input-group-text" id="fixed-bill-<%= index %>-label"><%= bill.name %>:</span>
                 <input id="fixed-bill-<%= index %>" name="fixed-bill-<%= index %>" type="number" class="form-control"
                         value=<%= bill.value %> aria-label="<%= bill.name %>">
+                <button class="btn btn-outline-danger fw-bold" type="button" id="del-fixed-bill-btn-<%= index %>">x</button>
             </div>
         <% }); %>
+        <div id="new-fixed-bills">
+            <!-- New incomes will be put here -->
+        </div>
+        <div class="input-group input-group-sm mx-auto">
+            <input type="text" class="form-control" id="new-fixed-bill-name" aria-describedby="add-fixed-bill-btn" 
+                aria-label="new-fixed-bill-name" placeholder="Adicionar...">
+            <button class="btn btn-outline-primary fw-bold" type="button" id="add-fixed-bill-btn">+</button>
+        </div>
         <hr class="border-secondary opacity-50">
         <div class="input-group mb-3 input-group-sm mx-auto">
             <span class="input-group-text" id="fixed-bills-total-label">Total:</span>

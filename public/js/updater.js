@@ -32,11 +32,13 @@ async function updateDB(obj) {
             // update balance
             finance.balance = finance.totalIncome - finance.totalFixedBills;
 
-            // updates total income field in the client
-            document.getElementById("balance").value = finance.balance;
-            // updates total income field in the client
-            document.getElementById("income-total").value = finance.totalIncome;
-            updateDB(finance);
+            updateDB(finance).then(() => {
+                // updates total income field in the client
+                document.getElementById("balance").value = finance.balance;
+                // updates total income field in the client
+                document.getElementById("income-total").value = finance.totalIncome;
+            }
+            );
         });
     });
     // function to add an event listener to every fixed bill field and update the array
@@ -53,11 +55,12 @@ async function updateDB(obj) {
             // update balance
             finance.balance = finance.totalIncome - finance.totalFixedBills;
 
-            // updates total income field in the client
-            document.getElementById("balance").value = finance.balance;
-            // updates total income field in the client
-            document.getElementById("fixed-bills-total").value = finance.totalFixedBills;
-            updateDB(finance);
+            updateDB(finance).then(() => {
+                // updates total income field in the client
+                document.getElementById("balance").value = finance.balance;
+                // updates total income field in the client
+                document.getElementById("fixed-bills-total").value = finance.totalFixedBills;
+            });
         });
     });
 })()
