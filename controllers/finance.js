@@ -2,23 +2,10 @@ const Finance = require('../models/finance');
 const path = require('path');
 
 module.exports.index = async (req, res) => {
-    //const finance = await readFinance();
-    //finance.totalIncome = 0;
-    //finance.totalFixedBills = 0;
-    //finance.balance = 0;
-//
-    //finance.incomes.forEach(function(income, index){
-    //    finance.totalIncome += income.value;
-    //});
-//
-    //finance.fixedBills.forEach(function(bill, index){
-    //    finance.totalFixedBills += bill.value;
-    //});
-//
-    //finance.balance = finance.totalIncome - finance.totalFixedBills;
-
     const finances = await Finance.find({});
     const finance = finances[0];
+    finance.totalIncome = finance.incomes.reduce((total, income) => total + income.value, 0);
+    finance.totalFixedBills = finance.fixedBills.reduce((total, bill) => total + bill.value, 0);
 
     res.render('finances/index', { finance });
 };

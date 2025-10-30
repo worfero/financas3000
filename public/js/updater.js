@@ -35,7 +35,7 @@ async function updateDB(obj) {
             // updates total income field in the client
             document.getElementById("balance").value = finance.balance;
             // updates total income field in the client
-            document.getElementById("income-total").value = finance.totalFixedBills;
+            document.getElementById("income-total").value = finance.totalIncome;
             updateDB(finance);
         });
     });

@@ -6,6 +6,12 @@
         incomeAdd.addEventListener("click", () => {
                 const labelText = incomeLabel.value.trim() || "Ganho"; // default if empty
 
+                const newIncome = { name: labelText, value: 0 };
+
+                const finLength = finance.incomes.push(newIncome);
+                const newIndex = finLength - 1
+                const income = finance.incomes[newIndex];
+
                 const container = document.createElement("div");
                 container.className = "input-group mb-3 input-group-sm mx-auto";
 
@@ -18,20 +24,23 @@
                 input.className = 'form-control';
                 input.value = 0;
 
+                const deleteBtn = document.createElement("button");
+                deleteBtn.type = "button";
+                deleteBtn.id = "del-income-btn-" + newIndex;
+                deleteBtn.className = "btn btn-outline-danger fw-bold";
+                deleteBtn.textContent = "x";
+
+                addRemoveIncomeEvent(deleteBtn, newIndex);
+
                 container.appendChild(span);
                 container.appendChild(input);
+                container.appendChild(deleteBtn);
 
                 incomePlace.appendChild(container);
 
                 incomeLabel.value = "";
 
-                const newIncome = { name: labelText, value: 0 };
-
-                const finLength = finance.incomes.push(newIncome);
-                const income = finance.incomes[finLength - 1];
-
                 updateDB(finance);
-
                 input.addEventListener("input", async (event) => {
                         console.log("teste")
                         // gets new value from the input field
@@ -47,7 +56,8 @@
                         // updates total income field in the client
                         document.getElementById("balance").value = finance.balance;
                         // updates total income field in the client
-                        document.getElementById("income-total").value = finance.totalFixedBills;
+                        document.getElementById("income-total").value = finance.totalIncome;
+
                         updateDB(finance);
                 });
         });
