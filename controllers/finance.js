@@ -11,10 +11,12 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.update = async (req, res) => {
-    const newFinance = req.body;
-    const finance = await Finance.findByIdAndUpdate(newFinance._id, newFinance, { new: true });
-    await finance.save();
-    res.json({ success: true, updated: finance });
+    const clientFinance = req.body;
+    const serverFinance = await Finance.findByIdAndUpdate(clientFinance._id, clientFinance, { new: true });
+    await serverFinance.save();
+    console.log(serverFinance);
+    const data = { success: true, updated: serverFinance }
+    res.json(data);
 };
 
 module.exports.new = async (req, res) => {

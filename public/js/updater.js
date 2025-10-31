@@ -12,6 +12,7 @@ async function updateDB(obj) {
 
         const data = await res.json();
         console.log('Server response:', data);
+        return data.updated;
     } catch (err) {
         console.error('Fetch failed:', err);
     }
@@ -20,7 +21,7 @@ async function updateDB(obj) {
 (function () {
     // function to add an event listener to every income field and update the array
     finance.incomes.forEach(function(income, index) {
-        id = "income-" + index;
+        id = "income-" + income._id;
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field
             const newValue = parseInt(event.target.value);
@@ -43,7 +44,7 @@ async function updateDB(obj) {
     });
     // function to add an event listener to every fixed bill field and update the array
     finance.fixedBills.forEach(function(fixedBill, index) {
-        id = "fixed-bill-" + index;
+        id = "fixed-bill-" + fixedBill._id;
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field
             const newValue = parseInt(event.target.value);

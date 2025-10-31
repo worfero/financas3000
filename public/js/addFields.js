@@ -66,20 +66,21 @@ function addFixedBill() {
         });
 }
 
-function getListType(type) {
+function getListType(type, financeObj) {
+        let _itemList;
         switch (type) {
                 case "income":
-                        itemList = finance.incomes;
+                        _itemList = financeObj.incomes;
                         break;
                 case "fixed-bill":
-                        itemList = finance.fixedBills;
+                        _itemList = financeObj.fixedBills;
                         break;
                 default:
                         console.log("Error: list not found");
-                        itemList = [];
+                        _itemList = [];
                         break;
         }
-        return itemList;
+        return _itemList;
 }
 
 function updateTotal(type, item, newValue) {
@@ -104,16 +105,23 @@ function addItem(type) {
         const place = document.getElementById('new-' + type + 's');
         const addBtn = document.getElementById('add-' + type + '-btn');
         const label = document.getElementById('new-' + type + '-name');
-        addBtn.addEventListener("click", () => {
+        addBtn.addEventListener("click", async () => {
                 const labelText = label.value.trim() || "Item";
 
                 const newItem = { name: labelText, value: 0 };
 
-                const itemList = getListType(type);
+                const oldItemList = getListType(type, oldFinance);
 
-                const finLength = itemList.push(newItem);
+                const finLength = oldItemList.push(newItem);
                 const newIndex = finLength - 1
-                const item = itemList[newIndex];
+
+                const newFinance = await updateDB(oldFinance);
+                console.log("Updated finance: ");
+                console.log(newFinance);
+
+                const newItemList = getListType(type, newFinance);
+
+                const item = newItemList[newIndex];
 
                 const container = document.createElement("div");
                 container.className = "input-group mb-3 input-group-sm mx-auto";
@@ -121,23 +129,22 @@ function addItem(type) {
                 const span = document.createElement("span");
                 span.className = "input-group-text";
                 span.textContent = labelText + ":";
-                span.id = type + "-" + newIndex + "-label";
+                span.id = type + "-" + item._id + "-label";
 
                 const input = document.createElement("input");
                 input.type = "number";
                 input.className = 'form-control';
                 input.value = 0;
-                input.id = type + "-" + newIndex;
-                input.name = type + "-" + newIndex;
+                input.id = type + "-" + item._id;
+                input.name = type + "-" + item._id;
                 input.ariaLabel = labelText;
 
                 const deleteBtn = document.createElement("button");
                 deleteBtn.type = "button";
-                deleteBtn.id = "del-" + type + "-btn-" + newIndex;
+                deleteBtn.id = "del-" + type + "-btn-" + item._id;
                 deleteBtn.className = "btn btn-outline-danger fw-bold";
                 deleteBtn.textContent = "x";
 
-                addRemoveIncomeEvent(deleteBtn, newIndex);
 
                 container.appendChild(span);
                 container.appendChild(input);
@@ -147,7 +154,8 @@ function addItem(type) {
 
                 label.value = "";
 
-                updateDB(finance);
+                addRemoveIncomeEvent(deleteBtn, newFinance, item._id);
+
                 input.addEventListener("input", async (event) => {
                         // gets new value from the input field
                         const newValue = parseInt(event.target.value);
@@ -157,19 +165,20 @@ function addItem(type) {
                         item.value = newValue;
 
                         // update balance
-                        finance.balance = finance.totalIncome - finance.totalFixedBills;
+                        newFinance.balance = newFinance.totalIncome - newFinance.totalFixedBills;
 
                         // updates total income field in the client
-                        document.getElementById("balance").value = finance.balance;
+                        document.getElementById("balance").value = newFinance.balance;
                         // updates total income field in the client
                         document.getElementById(type + "-total").value = total;
 
-                        updateDB(finance);
+                        updateDB(newFinance);
                 });
         });
 }
 
 (function () {
+        oldFinance = finance
         addItem("income");
         addFixedBill();
 })()

@@ -1,11 +1,13 @@
-function addRemoveIncomeEvent(element, index){
-    element.addEventListener("click", () => {
-        finance.totalIncome = finance.totalIncome - finance.incomes[index].value;
+function addRemoveIncomeEvent(element, financeObj, incomeId){
+    element.addEventListener("click", async () => {
+        financeObj.totalIncome = financeObj.totalIncome - financeObj.incomes.find(income => income._id === incomeId).value;
         // updates total income field in the client
-        document.getElementById("income-total").value = finance.totalIncome;
+        document.getElementById("income-total").value = financeObj.totalIncome;
         element.parentElement.remove();
-        finance.incomes = finance.incomes.filter((_, index_) => index_ !== index);
-        updateDB(finance);
+        financeObj.incomes = financeObj.incomes.filter(income => income._id !== incomeId);
+        await updateDB(financeObj);
+        console.log("Update finance (delete): ")
+        console.log(financeObj);
     });
 }
 
@@ -22,14 +24,14 @@ function addRemoveFixedBillEvent(element, index){
 
 (function () {
     finance.incomes.forEach(function(income, index) {
-        id = "del-income-btn-" + index;
+        const id = "del-income-btn-" + income._id;
         const incomeDeleteBtn = document.getElementById(id);
-        addRemoveIncomeEvent(incomeDeleteBtn, index);
+        addRemoveIncomeEvent(incomeDeleteBtn, finance, income._id);
     });
 
     finance.fixedBills.forEach(function(bill, index) {
-        id = "del-fixed-bill-btn-" + index;
+        const id = "del-fixed-bill-btn-" + bill._id;
         const fixedBillDeleteBtn = document.getElementById(id);
-        addRemoveFixedBillEvent(fixedBillDeleteBtn, index);
+        addRemoveFixedBillEvent(fixedBillDeleteBtn, finance, index);
     });
 })()
