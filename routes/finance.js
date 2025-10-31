@@ -10,10 +10,15 @@ router.route('/')
 router.route('/api/incomes/new')
     .post(catchAsync(finance.newIncome));
 
+router.route('/api/fixed-bills/new')
+    .post(catchAsync(finance.newFixedBill));
+
 router.route('/api/incomes/:id')
+    .put(catchAsync(finance.updateIncome))
     .delete(catchAsync(finance.deleteIncome));
 
-router.route('/update')
-    .put(catchAsync(finance.update));
+router.route('/api/fixed-bills/:id')
+    .put(catchAsync(finance.updateFixedBill))
+    .delete(catchAsync(finance.deleteFixedBill));
 
 module.exports = router;

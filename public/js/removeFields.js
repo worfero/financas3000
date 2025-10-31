@@ -1,20 +1,38 @@
-function addRemoveEvent(type, element, id){
-    element.addEventListener("click", async () => {
-        const newFinance = await deleteIncome(id) // from requests.js
-        // updates total income field in the client
-        document.getElementById(type + "-total").value = newFinance.totalIncome;
-        element.parentElement.remove();
-    });
+async function deleteRequest(type, id){
+    let newFinance;
+    switch (type) {
+            case "income":
+                    newFinance = await deleteIncomeRequest(id); // from request.js
+                    return newFinance;
+            case "fixed-bill":
+                    newFinance = await deleteFixedBillRequest(id); // from request.js
+                    return newFinance;
+            default:
+                    console.log("Error: type not found");
+                    return [];
+    }
 }
 
-function addRemoveFixedBillEvent(element, index){
-    element.addEventListener("click", () => {
-        finance.totalFixedBills = finance.totalFixedBills - finance.fixedBills[index].value;
-        // updates total income field in the client
-        document.getElementById("fixed-bills-total").value = finance.totalFixedBills;
+async function addRemoveEvent(type, element, id){
+    element.addEventListener("click", async () => {
+        const newFinance = await deleteRequest(type, id);
+        
         element.parentElement.remove();
-        finance.fixedBills = finance.fixedBills.filter((_, index_) => index_ !== index);
-        updateDB(finance);
+
+        // updates total income field in the client
+        document.getElementById("balance").value = newFinance.balance;
+        
+        switch(type){
+            case "income":
+                document.getElementById(type + "-total").value = newFinance.totalIncome;
+                break;
+            case "fixed-bill":
+                document.getElementById(type + "-total").value = newFinance.totalFixedBills;
+                break;
+            default:
+                console.log("Error: type not found");
+                break;
+        }
     });
 }
 
@@ -28,6 +46,6 @@ function addRemoveFixedBillEvent(element, index){
     finance.fixedBills.forEach(function(bill, index) {
         const id = "del-fixed-bill-btn-" + bill._id;
         const fixedBillDeleteBtn = document.getElementById(id);
-        addRemoveFixedBillEvent(fixedBillDeleteBtn, finance, index);
+        addRemoveEvent("fixed-bill", fixedBillDeleteBtn, bill._id);
     });
 })()

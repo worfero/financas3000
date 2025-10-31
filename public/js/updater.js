@@ -1,3 +1,37 @@
+async function updateRequest(type, id, newValue){
+    let newFinance;
+    switch (type) {
+            case "income":
+                    newFinance = await updateIncomeRequest(id, newValue); // from request.js
+                    return newFinance;
+            case "fixed-bill":
+                    newFinance = await updateFixedBillRequest(id, newValue); // from request.js
+                    return newFinance;
+            default:
+                    console.log("Error: type not found");
+                    return [];
+    }
+}
+
+async function updateEvent(type, id, newValue) {
+    const newFinance = await updateRequest(type, id, newValue);
+
+    // updates total income field in the client
+    document.getElementById("balance").value = newFinance.balance;
+    
+    switch(type){
+        case "income":
+            document.getElementById(type + "-total").value = newFinance.totalIncome;
+            break;
+        case "fixed-bill":
+            document.getElementById(type + "-total").value = newFinance.totalFixedBills;
+            break;
+        default:
+            console.log("Error: type not found");
+            break;
+    }
+}
+
 (function () {
     // function to add an event listener to every income field and update the array
     finance.incomes.forEach(function(income, index) {
@@ -5,21 +39,7 @@
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field
             const newValue = parseInt(event.target.value);
-            // updates total income
-            finance.totalIncome = finance.totalIncome - income.value + newValue;
-            // updates respective income field
-            income.value = newValue;
-
-            // update balance
-            finance.balance = finance.totalIncome - finance.totalFixedBills;
-
-            updateDB(finance).then(() => {
-                // updates total income field in the client
-                document.getElementById("balance").value = finance.balance;
-                // updates total income field in the client
-                document.getElementById("income-total").value = finance.totalIncome;
-            }
-            );
+            await updateEvent("income", income._id, newValue);
         });
     });
     // function to add an event listener to every fixed bill field and update the array
@@ -28,20 +48,7 @@
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field
             const newValue = parseInt(event.target.value);
-            // updates total income
-            finance.totalFixedBills = finance.totalFixedBills - fixedBill.value + newValue;
-            // updates respective income field
-            fixedBill.value = newValue;
-
-            // update balance
-            finance.balance = finance.totalIncome - finance.totalFixedBills;
-
-            updateDB(finance).then(() => {
-                // updates total income field in the client
-                document.getElementById("balance").value = finance.balance;
-                // updates total income field in the client
-                document.getElementById("fixed-bills-total").value = finance.totalFixedBills;
-            });
+            await updateEvent("fixed-bill", fixedBill._id, newValue);
         });
     });
 })()
