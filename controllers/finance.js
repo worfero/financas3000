@@ -19,9 +19,28 @@ module.exports.update = async (req, res) => {
     res.json(data);
 };
 
-module.exports.new = async (req, res) => {
-    //const finance = req.body;
-//
-    //await writeFinance(finance);
-    //res.json({ success: true, updated: finance });
+module.exports.newIncome = async (req, res) => {
+    const income = req.body;
+    const finances = await Finance.find({});
+    const finance = finances[0];
+    finance.incomes.push(income);
+    await finance.save();
+    const data = { success: true, updated: finance }
+    res.json(data);
+};
+
+module.exports.deleteIncome = async (req, res) => {
+    const incomeId = req.params.id;
+
+    const finances = await Finance.find({});
+    const finance = finances[0];
+
+    finance.totalIncome = finance.totalIncome - finance.incomes.find(income => income._id.toString() === incomeId).value;
+
+    finance.incomes = finance.incomes.filter(income => income._id.toString() !== incomeId);
+
+    await finance.save();
+
+    const data = { success: true, updated: finance }
+    res.json(data);
 };

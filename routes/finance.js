@@ -7,8 +7,11 @@ const router = express.Router();
 router.route('/')
     .get(catchAsync(finance.index))
 
-router.route('/new')
-    .put(catchAsync(finance.new));
+router.route('/api/incomes/new')
+    .post(catchAsync(finance.newIncome));
+
+router.route('/api/incomes/:id')
+    .delete(catchAsync(finance.deleteIncome));
 
 router.route('/update')
     .put(catchAsync(finance.update));

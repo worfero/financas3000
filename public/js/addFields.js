@@ -115,7 +115,7 @@ function addItem(type) {
                 const finLength = oldItemList.push(newItem);
                 const newIndex = finLength - 1
 
-                const newFinance = await updateDB(oldFinance);
+                const newFinance = await newIncome(newItem);
                 console.log("Updated finance: ");
                 console.log(newFinance);
 
@@ -154,7 +154,7 @@ function addItem(type) {
 
                 label.value = "";
 
-                addRemoveIncomeEvent(deleteBtn, newFinance, item._id);
+                addRemoveIncomeEvent(deleteBtn, item._id);
 
                 input.addEventListener("input", async (event) => {
                         // gets new value from the input field

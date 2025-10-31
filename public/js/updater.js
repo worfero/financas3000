@@ -1,23 +1,3 @@
-async function updateDB(obj) {
-    try{
-        const res = await fetch('/update', {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(obj)
-        });
-
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-
-        const data = await res.json();
-        console.log('Server response:', data);
-        return data.updated;
-    } catch (err) {
-        console.error('Fetch failed:', err);
-    }
-}
-
 (function () {
     // function to add an event listener to every income field and update the array
     finance.incomes.forEach(function(income, index) {

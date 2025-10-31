@@ -1,13 +1,10 @@
-function addRemoveIncomeEvent(element, financeObj, incomeId){
+function addRemoveIncomeEvent(element, incomeId){
     element.addEventListener("click", async () => {
-        financeObj.totalIncome = financeObj.totalIncome - financeObj.incomes.find(income => income._id === incomeId).value;
+        const newFinance = await deleteIncome(incomeId)
         // updates total income field in the client
-        document.getElementById("income-total").value = financeObj.totalIncome;
+        document.getElementById("income-total").value = newFinance.totalIncome;
         element.parentElement.remove();
-        financeObj.incomes = financeObj.incomes.filter(income => income._id !== incomeId);
-        await updateDB(financeObj);
-        console.log("Update finance (delete): ")
-        console.log(financeObj);
+        console.log("new finance: ", newFinance);
     });
 }
 
@@ -26,7 +23,7 @@ function addRemoveFixedBillEvent(element, index){
     finance.incomes.forEach(function(income, index) {
         const id = "del-income-btn-" + income._id;
         const incomeDeleteBtn = document.getElementById(id);
-        addRemoveIncomeEvent(incomeDeleteBtn, finance, income._id);
+        addRemoveIncomeEvent(incomeDeleteBtn, income._id);
     });
 
     finance.fixedBills.forEach(function(bill, index) {
