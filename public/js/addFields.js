@@ -83,6 +83,24 @@ function getListType(type, financeObj) {
         return _itemList;
 }
 
+async function pushRequest(type, newItem){
+        switch (type) {
+                case "income":
+                        const newFinance = await newIncome(newItem); // from request.js
+                        console.log(newFinance)
+                        return newFinance;
+                case "fixed-bill":
+                        //finance.totalFixedBills = finance.totalFixedBills - item.value + newValue
+                        //total = finance.totalFixedBills;
+                        break;
+                default:
+                        //console.log("Error: type not found");
+                        //total = 0;
+                        return [];
+                        break;
+        }
+}
+
 function updateTotal(type, item, newValue) {
         switch (type) {
                 case "income":
@@ -110,14 +128,10 @@ function addItem(type) {
 
                 const newItem = { name: labelText, value: 0 };
 
-                const oldItemList = getListType(type, oldFinance);
+                newFinance = await pushRequest(type, newItem);
 
-                const finLength = oldItemList.push(newItem);
+                const finLength = newFinance.incomes.length;
                 const newIndex = finLength - 1
-
-                const newFinance = await newIncome(newItem);
-                console.log("Updated finance: ");
-                console.log(newFinance);
 
                 const newItemList = getListType(type, newFinance);
 
@@ -154,7 +168,7 @@ function addItem(type) {
 
                 label.value = "";
 
-                addRemoveIncomeEvent(deleteBtn, item._id);
+                addRemoveEvent(type, deleteBtn, item._id); // from removeFields.js
 
                 input.addEventListener("input", async (event) => {
                         // gets new value from the input field

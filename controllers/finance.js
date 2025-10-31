@@ -44,3 +44,4 @@ module.exports.deleteIncome = async (req, res) => {
     const data = { success: true, updated: finance }
     res.json(data);
 };
+
