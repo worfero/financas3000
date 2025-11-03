@@ -7,6 +7,9 @@ module.exports.index = async (req, res) => {
     finance.totalIncome = finance.incomes.reduce((total, income) => total + income.value, 0);
     finance.totalFixedBills = finance.fixedBills.reduce((total, bill) => total + bill.value, 0);
 
+    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
     res.render('finances/index', { finance });
 };
 
