@@ -1,4 +1,5 @@
 const express = require('express');
+const morgan = require('morgan');
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
@@ -23,12 +24,14 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('ejs', ejsMate)
 
+app.use(morgan('tiny'));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
-app.use('/', financeRoutes);
+app.use('/finances', financeRoutes);
 app.use('/api/incomes', incomeRoutes);
 app.use('/api/fixed-bills', fixedBillRoutes);
 
