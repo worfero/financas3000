@@ -2,10 +2,10 @@ function getListType(type, financeObj) {
         let _itemList;
         switch (type) {
                 case "income":
-                        _itemList = financeObj.incomes;
+                        _itemList = financeObj.incomes.array;
                         break;
                 case "fixed-bill":
-                        _itemList = financeObj.fixedBills;
+                        _itemList = financeObj.fixedBills.array;
                         break;
                 default:
                         console.log("Error: list not found");
@@ -18,9 +18,9 @@ function getListType(type, financeObj) {
 function getNewIndex(type) {
         switch(type){
                 case "income":
-                        return newFinance.incomes.length - 1;
+                        return newFinance.incomes.array.length - 1;
                 case "fixed-bill":
-                        return newFinance.fixedBills.length - 1;
+                        return newFinance.fixedBills.array.length - 1;
                 default:
                         console.log("Error: type not found");
         }

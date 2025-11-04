@@ -5,21 +5,27 @@ const opts = { toJSON: { virtuals: true } };
 
 const FinanceSchema = new Schema({
     user: String,
-    totalIncome: Number,
-    totalFixedBills: Number,
     balance: Number,
-    incomes: [
-        {
+    incomes:
+    {
+        total: Number,
+        array: [
+            {
             name: String,
             value: Number
-        }
-    ],
-    fixedBills: [
-        {
+            }
+        ]
+    },
+    fixedBills:
+    {
+        total: Number,
+        array: [
+            {
             name: String,
             value: Number
-        }
-    ]
+            }
+        ]
+    }
 }, opts);
 
 module.exports = mongoose.model('Finance', FinanceSchema);

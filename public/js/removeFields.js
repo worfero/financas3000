@@ -24,10 +24,10 @@ async function addRemoveEvent(type, element, id){
         
         switch(type){
             case "income":
-                document.getElementById(type + "-total").value = newFinance.totalIncome;
+                document.getElementById(type + "-total").value = newFinance.incomes.total;
                 break;
             case "fixed-bill":
-                document.getElementById(type + "-total").value = newFinance.totalFixedBills;
+                document.getElementById(type + "-total").value = newFinance.fixedBills.total;
                 break;
             default:
                 console.log("Error: type not found");
@@ -37,13 +37,13 @@ async function addRemoveEvent(type, element, id){
 }
 
 (function () {
-    finance.incomes.forEach(function(income, index) {
+    finance.incomes.array.forEach(function(income, index) {
         const id = "del-income-btn-" + income._id;
         const incomeDeleteBtn = document.getElementById(id);
         addRemoveEvent("income", incomeDeleteBtn, income._id);
     });
 
-    finance.fixedBills.forEach(function(bill, index) {
+    finance.fixedBills.array.forEach(function(bill, index) {
         const id = "del-fixed-bill-btn-" + bill._id;
         const fixedBillDeleteBtn = document.getElementById(id);
         addRemoveEvent("fixed-bill", fixedBillDeleteBtn, bill._id);

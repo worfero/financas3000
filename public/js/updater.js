@@ -21,10 +21,10 @@ async function updateEvent(type, id, newValue) {
     
     switch(type){
         case "income":
-            document.getElementById(type + "-total").value = newFinance.totalIncome;
+            document.getElementById(type + "-total").value = newFinance.incomes.total;
             break;
         case "fixed-bill":
-            document.getElementById(type + "-total").value = newFinance.totalFixedBills;
+            document.getElementById(type + "-total").value = newFinance.fixedBills.total;
             break;
         default:
             console.log("Error: type not found");
@@ -34,7 +34,7 @@ async function updateEvent(type, id, newValue) {
 
 (function () {
     // function to add an event listener to every income field and update the array
-    finance.incomes.forEach(function(income, index) {
+    finance.incomes.array.forEach(function(income, index) {
         id = "income-" + income._id;
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field
@@ -43,7 +43,7 @@ async function updateEvent(type, id, newValue) {
         });
     });
     // function to add an event listener to every fixed bill field and update the array
-    finance.fixedBills.forEach(function(fixedBill, index) {
+    finance.fixedBills.array.forEach(function(fixedBill, index) {
         id = "fixed-bill-" + fixedBill._id;
         document.getElementById(id).addEventListener("input", async (event) => {
             // gets new value from the input field

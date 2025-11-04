@@ -4,8 +4,9 @@ const path = require('path');
 module.exports.index = async (req, res) => {
     const finances = await Finance.find({});
     const finance = finances[0];
-    finance.totalIncome = finance.incomes.reduce((total, income) => total + income.value, 0);
-    finance.totalFixedBills = finance.fixedBills.reduce((total, bill) => total + bill.value, 0);
+    
+    finance.incomes.total = finance.incomes.array.reduce((total, income) => total + income.value, 0);
+    finance.fixedBills.total = finance.fixedBills.array.reduce((total, bill) => total + bill.value, 0);
 
     res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.setHeader('Pragma', 'no-cache');
@@ -17,7 +18,7 @@ module.exports.newIncome = async (req, res) => {
     const income = req.body;
     const finances = await Finance.find({});
     const finance = finances[0];
-    finance.incomes.push(income);
+    finance.incomes.array.push(income);
     await finance.save();
     const data = { success: true, updated: finance }
     res.json(data);
@@ -27,11 +28,16 @@ module.exports.updateIncome = async (req, res) => {
     const { incomeId, newValue } = req.body;
     const finances = await Finance.find({});
     const finance = finances[0];
-    const income = finance.incomes.find(income => income._id.toString() === incomeId);
-    finance.totalIncome = finance.totalIncome - income.value + newValue;
-    finance.balance = finance.totalIncome - finance.totalFixedBills;
+
+    const income = finance.incomes.array.find(income => income._id.toString() === incomeId);
+
+    finance.incomes.total = finance.incomes.total - income.value + newValue;
+    finance.balance = finance.incomes.total - finance.fixedBills.total;
+
     income.value = newValue;
+
     await finance.save();
+
     const data = { success: true, updated: finance }
     res.json(data);
 };
@@ -42,11 +48,11 @@ module.exports.deleteIncome = async (req, res) => {
     const finances = await Finance.find({});
     const finance = finances[0];
 
-    finance.totalIncome = finance.totalIncome - finance.incomes.find(income => income._id.toString() === incomeId).value;
+    finance.incomes.total = finance.incomes.total - finance.incomes.array.find(income => income._id.toString() === incomeId).value;
 
-    finance.incomes = finance.incomes.filter(income => income._id.toString() !== incomeId);
+    finance.incomes.array = finance.incomes.array.filter(income => income._id.toString() !== incomeId);
 
-    finance.balance = finance.totalIncome - finance.totalFixedBills;
+    finance.balance = finance.incomes.total - finance.fixedBills.total;
 
     await finance.save();
 
@@ -56,10 +62,14 @@ module.exports.deleteIncome = async (req, res) => {
 
 module.exports.newFixedBill = async (req, res) => {
     const bill = req.body;
+
     const finances = await Finance.find({});
     const finance = finances[0];
-    finance.fixedBills.push(bill);
+
+    finance.fixedBills.array.push(bill);
+
     await finance.save();
+
     const data = { success: true, updated: finance }
     res.json(data);
 };
@@ -69,11 +79,11 @@ module.exports.updateFixedBill = async (req, res) => {
 
     const finances = await Finance.find({});
     const finance = finances[0];
-    const bill = finance.fixedBills.find(bill => bill._id.toString() === billId);
+    const bill = finance.fixedBills.array.find(bill => bill._id.toString() === billId);
 
-    finance.totalFixedBills = finance.totalFixedBills - bill.value + newValue;
+    finance.fixedBills.total = finance.fixedBills.total - bill.value + newValue;
 
-    finance.balance = finance.totalIncome - finance.totalFixedBills;
+    finance.balance = finance.incomes.total - finance.fixedBills.total;
 
     bill.value = newValue;
 
@@ -88,11 +98,11 @@ module.exports.deleteFixedBill = async (req, res) => {
     const finances = await Finance.find({});
     const finance = finances[0];
 
-    finance.totalFixedBills = finance.totalFixedBills - finance.fixedBills.find(bill => bill._id.toString() === billId).value;
+    finance.fixedBills.total = finance.fixedBills.total - finance.fixedBills.array.find(bill => bill._id.toString() === billId).value;
 
-    finance.fixedBills = finance.fixedBills.filter(bill => bill._id.toString() !== billId);
+    finance.fixedBills.array = finance.fixedBills.array.filter(bill => bill._id.toString() !== billId);
 
-    finance.balance = finance.totalIncome - finance.totalFixedBills;
+    finance.balance = finance.incomes.total - finance.fixedBills.total;
 
     await finance.save();
 
