@@ -7,6 +7,9 @@ function getListType(type, financeObj) {
                 case "fixed-bill":
                         _itemList = financeObj.fixedBills.array;
                         break;
+                case "bill":
+                        _itemList = financeObj.bills.array;
+                        break;
                 default:
                         console.log("Error: list not found");
                         _itemList = [];
@@ -21,6 +24,8 @@ function getNewIndex(type) {
                         return newFinance.incomes.array.length - 1;
                 case "fixed-bill":
                         return newFinance.fixedBills.array.length - 1;
+                case "bill":
+                        return newFinance.bills.array.length - 1;
                 default:
                         console.log("Error: type not found");
         }
@@ -34,6 +39,9 @@ async function pushRequest(type, newItem){
                         return newFinance;
                 case "fixed-bill":
                         newFinance = await newFixedBillRequest(newItem); // from requests.js
+                        return newFinance;
+                case "bill":
+                        newFinance = await newBillRequest(newItem); // from requests.js
                         return newFinance;
                 default:
                         console.log("Error: type not found");
@@ -103,4 +111,5 @@ function addItem(type) {
         oldFinance = finance
         addItem("income");
         addItem("fixed-bill");
+        addItem("bill");
 })()

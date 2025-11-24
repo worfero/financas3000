@@ -27,6 +27,7 @@
                     value=<%= finance.incomes.total %> aria-label="income-total" readonly>
         </div>
     </div>
+
     <div class="col-sm-3">
         <h4 class="text-center mb-4">Contas Fixas</h4>
         <% finance.fixedBills.array.forEach(function(bill, index) { %>
@@ -52,6 +53,33 @@
                     value=<%= finance.fixedBills.total %> aria-label="fixed-bill-total" readonly>
         </div>
     </div>
+
+    <div class="col-sm-3">
+        <h4 class="text-center mb-4">Contas Variáveis</h4>
+        <% finance.bills.array.forEach(function(bill, index) { %>
+            <div class="input-group mb-3 input-group-sm mx-auto">
+                <span class="input-group-text" id="bill-<%= bill._id %>-label"><%= bill.name %>:</span>
+                <input id="bill-<%= bill._id %>" name="bill-<%= bill._id %>" type="number" class="form-control"
+                        value=<%= bill.value %> aria-label="<%= bill.name %>">
+                <button class="btn btn-outline-danger fw-bold" type="button" id="del-bill-btn-<%= bill._id %>">x</button>
+            </div>
+        <% }); %>
+        <div id="new-bills">
+            <!-- New incomes will be put here -->
+        </div>
+        <div class="input-group input-group-sm mx-auto">
+            <input type="text" class="form-control" id="new-bill-name" aria-describedby="add-bill-btn" 
+                aria-label="new-bill-name" placeholder="Adicionar...">
+            <button class="btn btn-outline-primary fw-bold" type="button" id="add-bill-btn">+</button>
+        </div>
+        <hr class="border-secondary opacity-50">
+        <div class="input-group mb-3 input-group-sm mx-auto">
+            <span class="input-group-text" id="bill-total-label">Total:</span>
+            <input id="bill-total" name="bill-total" type="number" class="form-control no-arrows bg-light"
+                    value=<%= finance.bills.total %> aria-label="bill-total" readonly>
+        </div>
+    </div>
+
     <div class="col-sm-3">
         <h4 class="text-center mb-4">Balanço</h4>
         <div class="input-group mb-3 input-group-sm mx-auto">

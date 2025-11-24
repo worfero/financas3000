@@ -10,6 +10,7 @@ db.once("open", () => {
 });
 
 const seedDB = async () => {
+    await Finance.deleteMany({});
     const finance = new Finance({
         user: 'Henrique',
         balance: 0,
@@ -31,6 +32,17 @@ const seedDB = async () => {
             [
                 {
                 name: "Aluguel",
+                value: 0
+                }
+            ]
+        },
+        bills: 
+        {
+            total: 0,
+            array: 
+            [
+                {
+                name: "Conta",
                 value: 0
                 }
             ]

@@ -18,7 +18,7 @@ module.exports.updateIncome = async (req, res) => {
     const income = finance.incomes.array.find(income => income._id.toString() === incomeId);
 
     finance.incomes.total = finance.incomes.total - income.value + newValue;
-    finance.balance = finance.incomes.total - finance.fixedBills.total;
+    finance.balance = finance.incomes.total - finance.fixedBills.total - finance.bills.total;
 
     income.value = newValue;
 
@@ -38,7 +38,7 @@ module.exports.deleteIncome = async (req, res) => {
 
     finance.incomes.array = finance.incomes.array.filter(income => income._id.toString() !== incomeId);
 
-    finance.balance = finance.incomes.total - finance.fixedBills.total;
+    finance.balance = finance.incomes.total - finance.fixedBills.total - finance.bills.total;
 
     await finance.save();
 

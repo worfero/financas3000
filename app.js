@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const financeRoutes = require('./routes/finance');
 const incomeRoutes = require('./routes/incomes');
 const fixedBillRoutes = require('./routes/fixedBills');
+const billRoutes = require('./routes/bills')
 
 mongoose.connect('mongodb://localhost:27017/finance');
 
@@ -24,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.engine('ejs', ejsMate)
 
-app.use(morgan('tiny'));
+//app.use(morgan('tiny'));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use('/finances', financeRoutes);
 app.use('/api/incomes', incomeRoutes);
 app.use('/api/fixed-bills', fixedBillRoutes);
+app.use('/api/bills', billRoutes);
 
 app.listen(3000, () => {
     console.log("Serving on port 3000");

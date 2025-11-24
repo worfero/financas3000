@@ -25,6 +25,16 @@ const FinanceSchema = new Schema({
             value: Number
             }
         ]
+    },
+    bills:
+    {
+        total: Number,
+        array: [
+            {
+            name: String,
+            value: Number
+            }
+        ]
     }
 }, opts);
 

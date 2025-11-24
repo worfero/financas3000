@@ -1,15 +1,18 @@
 async function deleteRequest(type, id){
     let newFinance;
     switch (type) {
-            case "income":
-                    newFinance = await deleteIncomeRequest(id); // from request.js
-                    return newFinance;
-            case "fixed-bill":
-                    newFinance = await deleteFixedBillRequest(id); // from request.js
-                    return newFinance;
-            default:
-                    console.log("Error: type not found");
-                    return [];
+        case "income":
+            newFinance = await deleteIncomeRequest(id); // from request.js
+            return newFinance;
+        case "fixed-bill":
+            newFinance = await deleteFixedBillRequest(id); // from request.js
+            return newFinance;
+        case "bill":
+            newFinance = await deleteBillRequest(id); // from request.js
+            return newFinance;
+        default:
+            console.log("Error: type not found");
+            return [];
     }
 }
 
@@ -29,6 +32,9 @@ async function addRemoveEvent(type, element, id){
             case "fixed-bill":
                 document.getElementById(type + "-total").value = newFinance.fixedBills.total;
                 break;
+            case "bill":
+                document.getElementById(type + "-total").value = newFinance.bills.total;
+                break;
             default:
                 console.log("Error: type not found");
                 break;
@@ -47,5 +53,11 @@ async function addRemoveEvent(type, element, id){
         const id = "del-fixed-bill-btn-" + bill._id;
         const fixedBillDeleteBtn = document.getElementById(id);
         addRemoveEvent("fixed-bill", fixedBillDeleteBtn, bill._id);
+    });
+
+    finance.bills.array.forEach(function(bill, index) {
+        const id = "del-bill-btn-" + bill._id;
+        const billDeleteBtn = document.getElementById(id);
+        addRemoveEvent("bill", billDeleteBtn, bill._id);
     });
 })()

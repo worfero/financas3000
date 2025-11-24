@@ -38,6 +38,26 @@ async function newFixedBillRequest(bill) {
     }
 }
 
+async function newBillRequest(bill) {
+    try{
+        const res = await fetch('/api/bills/new', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(bill)
+        });
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        console.log('Server response:', data);
+        return data.updated;
+    } catch (err) {
+        console.error('Fetch failed:', err);
+    }
+}
+
 async function deleteIncomeRequest(incomeId) {
     try{
         const res = await fetch(`/api/incomes/${incomeId}`, {
@@ -60,6 +80,25 @@ async function deleteIncomeRequest(incomeId) {
 async function deleteFixedBillRequest(billId) {
     try{
         const res = await fetch(`/api/fixed-bills/${billId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        console.log('Server response:', data);
+        return data.updated;
+    } catch (err) {
+        console.error('Fetch failed:', err);
+    }
+}
+
+async function deleteBillRequest(billId) {
+    try{
+        const res = await fetch(`/api/bills/${billId}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -99,6 +138,26 @@ async function updateIncomeRequest(incomeId, newValue) {
 async function updateFixedBillRequest(billId, newValue) {
     try{
         const res = await fetch(`/api/fixed-bills/${billId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ billId, newValue })
+        });
+
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+
+        const data = await res.json();
+        console.log('Server response:', data);
+        return data.updated;
+    } catch (err) {
+        console.error('Fetch failed:', err);
+    }
+}
+
+async function updateBillRequest(billId, newValue) {
+    try{
+        const res = await fetch(`/api/bills/${billId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
