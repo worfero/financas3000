@@ -9,3 +9,8 @@ module.exports.isActivePage = (req, res, next) => {
 
     next();
 }
+
+module.exports.checkLogin = ((req, res, next) => {
+    res.locals.isLogged = req.oidc.isAuthenticated();
+    next();
+});
