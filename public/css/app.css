@@ -10,6 +10,18 @@
   -moz-appearance: textfield;
 }
 
+.navbar-brand {
+  color: white !important;
+}
+
+.nav-item .nav-link {
+  color: lightgrey !important;
+}
+
+.nav-item .active {
+  color: white !important;
+}
+
 .balance-red {
   background-color: red !important;
 }
