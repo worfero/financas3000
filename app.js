@@ -1,3 +1,4 @@
+// node packages
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
@@ -5,11 +6,16 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 
+// custom scripts
+const { isActivePage } = require('./middleware');
+
+// route declaration
 const financeRoutes = require('./routes/finance');
 const incomeRoutes = require('./routes/incomes');
 const fixedBillRoutes = require('./routes/fixedBills');
-const billRoutes = require('./routes/bills')
+const billRoutes = require('./routes/bills');
 
+// MongoDB setup
 mongoose.connect('mongodb://localhost:27017/finance');
 
 const db = mongoose.connection;
@@ -32,11 +38,20 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+// my custom middleware
+app.use(isActivePage);
+
+// routes
 app.use('/finances', financeRoutes);
 app.use('/api/incomes', incomeRoutes);
 app.use('/api/fixed-bills', fixedBillRoutes);
 app.use('/api/bills', billRoutes);
 
+app.get('/', (req, res) => {
+    res.render('home');
+})
+
+// server initialization
 app.listen(3000, () => {
     console.log("Serving on port 3000");
 })
