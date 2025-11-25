@@ -1,5 +1,8 @@
 module.exports.isActivePage = (req, res, next) => {
     res.locals.activePage = req.path;
+    res.locals.username = req.oidc.user.name;
+
+    res.locals.activeUser = function () { return res.locals.username; }
 
     res.locals.activeAttr = function (page){
         return res.locals.activePage === page

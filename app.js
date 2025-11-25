@@ -8,7 +8,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
-const { auth, requiresAuth } = require('express-openid-connect');
+const { auth } = require('express-openid-connect');
 
 // custom scripts
 const { isActivePage, checkLogin } = require('./middleware');
