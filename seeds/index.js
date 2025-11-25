@@ -12,7 +12,7 @@ db.once("open", () => {
 const seedDB = async () => {
     await Finance.deleteMany({});
     const finance = new Finance({
-        user: 'Henrique',
+        userID: "google-oauth2|103627997067139778661",
         balance: 0,
         incomes: 
         {

@@ -4,15 +4,19 @@ const Schema = mongoose.Schema;
 const opts = { toJSON: { virtuals: true } };
 
 const FinanceSchema = new Schema({
-    user: String,
+    userID: 
+    {
+        type: String,
+        required: true
+    },
     balance: Number,
     incomes:
     {
         total: Number,
         array: [
             {
-            name: String,
-            value: Number
+                name: String,
+                value: Number
             }
         ]
     },
@@ -21,8 +25,8 @@ const FinanceSchema = new Schema({
         total: Number,
         array: [
             {
-            name: String,
-            value: Number
+                name: String,
+                value: Number
             }
         ]
     },
@@ -31,8 +35,8 @@ const FinanceSchema = new Schema({
         total: Number,
         array: [
             {
-            name: String,
-            value: Number
+                name: String,
+                value: Number
             }
         ]
     }

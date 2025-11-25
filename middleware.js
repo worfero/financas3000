@@ -1,6 +1,12 @@
 module.exports.isActivePage = (req, res, next) => {
     res.locals.activePage = req.path;
-    res.locals.username = req.oidc.user.name;
+
+    if(!req.oidc.user){
+        res.locals.username = "NOT_LOGGED";
+    }
+    else{
+        res.locals.username = req.oidc.user.name;
+    }
 
     res.locals.activeUser = function () { return res.locals.username; }
 
